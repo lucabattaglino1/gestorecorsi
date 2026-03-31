@@ -1,36 +1,39 @@
 import flet as ft
 
+# contiene tutti gli ogetti grafici
 
 class View(ft.UserControl):
     def __init__(self, page: ft.Page):
         super().__init__()
         # page stuff
         self._page = page
-        self._page.title = "Gestore Corsi - Edizione 2026"
-        self._page.horizontal_alignment = 'CENTER'
-        self._page.theme_mode = ft.ThemeMode.LIGHT
+        self._page.title = "Gestore Corsi - Edizione 2026" #titolo finestra pc
+        self._page.horizontal_alignment = 'CENTER' #allineata al centro
+        self._page.theme_mode = ft.ThemeMode.LIGHT #tema light
         # controller (it is not initialized. Must be initialized in the main, after the controller is created)
         self._controller = None
         # graphical elements
         self._title = None
 
-        self.ddPD = None
-        self.ddCodins = None
-        self.btnPrintCorsiPD = None
-        self.btnPrintIscrittiCorsiPD = None
-        self.btnPrintIscrittiCodins = None
-        self.btnPrintCDSCodins = None
+        # definisco tutti gli ogeetti grafici nel costruttore
+        self.ddPD = None # menu a tendina
+        self.ddCodins = None # menu a tendina
+        self.btnPrintCorsiPD = None # bottone
+        self.btnPrintIscrittiCorsiPD = None # bottone
+        self.btnPrintIscrittiCodins = None # bottone
+        self.btnPrintCDSCodins = None # bottone
 
-
+    # carica l'interfaccia
     def load_interface(self):
-        # title
+        # titolo nella finestra
         self._title = ft.Text("Gestore Corsi - Edizione 2026", color="blue", size=24)
         self._page.controls.append(self._title)
 
-        #ROW1
+        #ROW1, menu a tendina con nome e le due opzioni (I e II)
         self.ddPD = ft.Dropdown(label="Periodo Didattico",
                                 options = [ft.dropdown.Option("I"), ft.dropdown.Option("II")],
                                 width=200)
+        # qui ho i due bottoni che hanno testo pulsante e onclick legato a un metodo del controller
         self.btnPrintCorsiPD = ft.ElevatedButton(text="Stampa Corsi",
                                                  on_click=self._controller.handlePrintCorsiPD,
                                                  width=300)
@@ -38,18 +41,26 @@ class View(ft.UserControl):
                                                  on_click=self._controller.handlePrintIscrittiCorsiPD,
                                                  width=300)
 
+        # aggiungo i tre ogetti grafici alla riga
         row1 = ft.Row([self.ddPD, self.btnPrintCorsiPD, self.btnPrintIscrittiCorsiPD])
 
+        # menu a tendina, non conosco le opzioni
+        # sarà una query del controller che chiederà quali iscritti ci sono al corso e ce li dice
         self.ddCodins = ft.Dropdown(label = "Corso", width=200)
+        # chiamo il metodo implementato nel controller per riempire il menu a tendina
         self._controller.fillddCodins()
+        # qui ho i due bottoni con onclick con funzioni del controller
         self.btnPrintIscrittiCodins = ft.ElevatedButton(text = "Stampa iscritti al corso",
                                                         on_click = self._controller.handlePrintIscrittiCodins,
-                                                 width=300)
+                                                        width=300)
         self.btnPrintCDSCodins = ft.ElevatedButton(text = "Stampa CDS afferenti",
                                                    on_click = self._controller.handlePrintCDSCodins,
-                                                 width=300)
+                                                   width=300)
 
+        # aggiungo alla riga i 3 metodi
         row2 = ft.Row([self.ddCodins, self.btnPrintIscrittiCodins, self.btnPrintCDSCodins])
+
+        # aggiungo alla pagina le due righe con tutti gli oggetti grafici
         self._page.add(row1, row2)
 
         # List View where the reply is printed

@@ -12,6 +12,7 @@ class DBConnect:
     def __init__(self):
         raise RuntimeError('Do not create an instance, use the class method get_connection()!')
 
+    # unico metodo di classe che verifica se c'è una connessione
     @classmethod
     def get_connection(cls, pool_name = "my_pool", pool_size = 3) -> mysql.connector.pooling.PooledMySQLConnection:
         """Factory method for lending connections from the pool. It also initializes the pool
