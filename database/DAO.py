@@ -150,7 +150,7 @@ class DAO():
         res = []
         for row in cursor:
             # tupla
-            res.append(row["CDS"], row["n"])
+            res.append((row["CDS"], row["n"]))
 
         cursor.close()
         cnx.close()

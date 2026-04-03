@@ -98,7 +98,7 @@ class Controller:
             return
 
         # se arrivo qui posso recuperare gli studenti
-        studenti = self._model.getSTudentiCorso(self._ddCodinsValue.codins)
+        studenti = self._model.getStudentiCorso(self._ddCodinsValue.codins)
 
         if not len(studenti):
             self._view.txt_result.controls.append(
